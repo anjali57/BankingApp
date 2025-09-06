@@ -14,6 +14,8 @@ namespace BankingApp.Infra.Data
 
         public DbSet<Account> Accounts { get; set; }
 
+        public DbSet<Loan> Loans { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -32,6 +34,22 @@ namespace BankingApp.Infra.Data
                 entity.Property(a => a.Balance)
                       .HasColumnType("decimal(18,2)");
             });
+
+            modelBuilder.Entity<Loan>()
+        .Property(l => l.LoanId)
+        .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Loan>()
+                .Property(l => l.Amount)
+                .HasColumnType("decimal(18,2)");
+
+            modelBuilder.Entity<Loan>()
+                .Property(l => l.Status)
+                .HasMaxLength(50);
+
+            modelBuilder.Entity<Loan>()
+                .Property(l => l.CustomerId)
+                .HasMaxLength(20);
         }
     }
 }

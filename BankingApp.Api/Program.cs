@@ -3,6 +3,7 @@ using BankingApp.Domain.Repositories;
 using BankingApp.Domain.Services;
 using BankingApp.Domain.Services.Repo;
 using BankingApp.Infra.Data;
+using BankingApp.Infra.Repo;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAccountRepo, AccountRepo>();
+builder.Services.AddScoped<ILoanRepo, LoanRepo>();
+builder.Services.AddScoped<ILoanService, LoanService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
