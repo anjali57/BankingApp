@@ -4,6 +4,7 @@ using BankingApp.Infra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankingApp.Infra.Migrations
 {
     [DbContext(typeof(CustEnqContext))]
-    partial class CustEnqContextModelSnapshot : ModelSnapshot
+    [Migration("20250907172525_AddCustomerTable")]
+    partial class AddCustomerTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,34 +112,6 @@ namespace BankingApp.Infra.Migrations
                     b.ToTable("Loans");
                 });
 
-            modelBuilder.Entity("BankingApp.Domain.Entities.Transaction", b =>
-                {
-                    b.Property<int>("TransactionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionId"));
-
-                    b.Property<int>("AccountNumber")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TransactionType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("TransactionId");
-
-                    b.HasIndex("AccountNumber");
-
-                    b.ToTable("Transactions");
-                });
-
             modelBuilder.Entity("BankingApp.Domain.Entities.Account", b =>
                 {
                     b.HasOne("BankingApp.Domain.Entities.Customer", null)
@@ -149,22 +124,6 @@ namespace BankingApp.Infra.Migrations
                     b.HasOne("BankingApp.Domain.Entities.Customer", null)
                         .WithMany("Loans")
                         .HasForeignKey("CustomerId");
-                });
-
-            modelBuilder.Entity("BankingApp.Domain.Entities.Transaction", b =>
-                {
-                    b.HasOne("BankingApp.Domain.Entities.Account", "Account")
-                        .WithMany("Transactions")
-                        .HasForeignKey("AccountNumber")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("BankingApp.Domain.Entities.Account", b =>
-                {
-                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("BankingApp.Domain.Entities.Customer", b =>

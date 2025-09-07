@@ -12,5 +12,9 @@ namespace BankingApp.Domain.Entities
         public int AccountNumber { get; set; }
         public string Name { get; set; } = string.Empty;
         public decimal Balance { get; set; }
+
+        public string CustomerId { get; set; } // FK
+
+        public ICollection<Transaction> Transactions { get; set; }
     }
 }

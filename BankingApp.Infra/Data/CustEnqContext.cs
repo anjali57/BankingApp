@@ -16,6 +16,10 @@ namespace BankingApp.Infra.Data
 
         public DbSet<Loan> Loans { get; set; }
 
+        public DbSet<Customer> Customers { get; set; }
+
+        public DbSet<Transaction> Transactions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -50,6 +54,44 @@ namespace BankingApp.Infra.Data
             modelBuilder.Entity<Loan>()
                 .Property(l => l.CustomerId)
                 .HasMaxLength(20);
+
+            modelBuilder.Entity<Customer>(entity =>
+            {
+                entity.HasKey(c => c.CustomerId);
+
+                entity.Property(c => c.CustomerId)
+                      .HasMaxLength(20)
+                      .IsRequired();
+
+                entity.Property(c => c.Name)
+                      .HasMaxLength(100)
+                      .IsRequired();
+
+                entity.Property(c => c.Email)
+                      .HasMaxLength(100);
+
+                entity.Property(c => c.Phone)
+                      .HasMaxLength(20);
+
+                entity.Property(c => c.IsApproved)
+                      .IsRequired();
+
+                // Navigation properties
+                entity.HasMany(c => c.Accounts)
+                      .WithOne()
+                      .HasForeignKey(a => a.CustomerId)
+                      .IsRequired(false);
+
+                entity.HasMany(c => c.Loans)
+                      .WithOne()
+                      .HasForeignKey(l => l.CustomerId)
+                      .IsRequired(false);
+            });
+
+            modelBuilder.Entity<Account>()
+            .HasMany(a => a.Transactions)
+            .WithOne(t => t.Account)
+            .HasForeignKey(t => t.AccountNumber);
         }
     }
 }
