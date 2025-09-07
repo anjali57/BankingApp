@@ -12,6 +12,8 @@ namespace BankingApp.Domain.Interfaces
         Task<Customer> CreateCustomerAsync(Customer customer);
         Task<Customer?> GetCustomerByIdAsync(string id);
         Task<IEnumerable<Customer>> GetAllCustomersAsync();
-        Task<bool> ApproveCustomerAsync(int id, bool isApproved);
+        Task<bool> ApproveCustomerAsync(string customerId);
+
+        Task<bool> RejectCustomerAsync(string customerId);
     }
 }

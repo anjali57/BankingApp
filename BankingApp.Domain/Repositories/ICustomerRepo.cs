@@ -10,8 +10,10 @@ namespace BankingApp.Domain.Repositories
     public interface ICustomerRepo
     {
         Task<Customer> CreateCustomerAsync(Customer customer);
-        Task<Customer?> GetCustomerByIdAsync(string id);
+        Task<Customer?> GetCustomerByIdAsync(string customerId);
         Task<IEnumerable<Customer>> GetAllCustomersAsync();
-        Task<bool> ApproveCustomerAsync(int id, bool isApproved);
+        Task<bool> ApproveCustomerAsync(string customerId);
+
+        Task<bool> RejectCustomerAsync(string customerId);
     }
 }

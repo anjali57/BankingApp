@@ -82,14 +82,5 @@ namespace BankingApp.Api.Controllers
                 AppliedOn = l.AppliedOn
             }));
         }
-
-        [HttpPut("status/{id}")]
-        public async Task<IActionResult> UpdateLoanStatus(int id, [FromBody] string status)
-        {
-            var success = await _loanService.UpdateLoanStatusAsync(id, status);
-            if (!success) return NotFound();
-
-            return NoContent();
-        }
     }
 }

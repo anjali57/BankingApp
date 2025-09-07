@@ -33,9 +33,14 @@ namespace BankingApp.Domain.Services
             return await _customerRepo.GetAllCustomersAsync();
         }
 
-        public async Task<bool> ApproveCustomerAsync(int id, bool isApproved)
+        public async Task<bool> ApproveCustomerAsync(string customerId)
         {
-            return await _customerRepo.ApproveCustomerAsync(id, isApproved);
+            return await _customerRepo.ApproveCustomerAsync(customerId);
+        }
+
+        public async Task<bool> RejectCustomerAsync(string customerId)
+        {
+            return await _customerRepo.RejectCustomerAsync(customerId);
         }
     }
 }

@@ -68,14 +68,5 @@ namespace BankingApp.Api.Controllers
                 IsApproved = c.IsApproved
             }));
         }
-
-        [HttpPut("{id}/approve")]
-        public async Task<IActionResult> ApproveCustomer(int id, CustomerApprovalDto dto)
-        {
-            var result = await _customerService.ApproveCustomerAsync(id, dto.IsApproved);
-            if (!result) return NotFound();
-
-            return NoContent();
-        }
     }
 }

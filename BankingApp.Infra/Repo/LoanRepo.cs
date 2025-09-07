@@ -43,14 +43,25 @@ namespace BankingApp.Infra.Repo
             return await _context.Loans.ToListAsync();
         }
 
-        public async Task<bool> UpdateLoanStatusAsync(int loanId, string status)
+        public async Task<bool> ApproveLoanAsync(int loanId)
         {
             var loan = await _context.Loans.FindAsync(loanId);
             if (loan == null) return false;
 
-            loan.Status = status;
+            loan.Status = "Approved";
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<bool> RejectLoanAsync(int loanId)
+        {
+            var loan = await _context.Loans.FindAsync(loanId);
+            if (loan == null) return false;
+
+            loan.Status = "Rejected";
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
     }
 }

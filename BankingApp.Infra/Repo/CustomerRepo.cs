@@ -42,12 +42,22 @@ namespace BankingApp.Infra.Repo
                 .ToListAsync();
         }
 
-        public async Task<bool> ApproveCustomerAsync(int id, bool isApproved)
+        public async Task<bool> ApproveCustomerAsync(string customerId)
         {
-            var customer = await _context.Customers.FindAsync(id);
+            var customer = await _context.Customers.FindAsync(customerId);
             if (customer == null) return false;
 
-            customer.IsApproved = isApproved;
+            customer.IsApproved = true;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> RejectCustomerAsync(string customerId)
+        {
+            var customer = await _context.Customers.FindAsync(customerId);
+            if (customer == null) return false;
+
+            customer.IsApproved = false;
             await _context.SaveChangesAsync();
             return true;
         }

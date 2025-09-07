@@ -14,6 +14,7 @@ namespace BankingApp.Domain.Interfaces
         Task<IEnumerable<Loan>> GetAllLoansAsync();
 
         Task<IEnumerable<Loan>> GetLoansByCustomerIdAsync(string customerId);
-        Task<bool> UpdateLoanStatusAsync(int loanId, string status);
+        Task<bool> ApproveLoanAsync(int loanId);
+        Task<bool> RejectLoanAsync(int loanId);
     }
 }
